@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Solver output / scratch (regenerated, not checked in)
+results/
+reference/
+*.xdmf
+*.h5
+*.bp
+*.pvd
+*.vtu
+
+# Local env / caches
+.env.local
+.cache/
+
+# Claude Code session-local permissions (personal, not shipped)
+.claude/settings.local.json
+
+# OS cruft
+.DS_Store

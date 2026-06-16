@@ -1,0 +1,33 @@
+{
+  "name": "fenics-fe-dev",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+
+  // Mount the repo at /demo (not the default /workspaces/<repo>): Claude Code's
+  // `-demo` memory key and the prompt.md-driven flow assume this path. The
+  // solver itself is not in the repo — the agent generates it from prompt.md;
+  // this container only provides the FEniCS stack it runs against.
+  "workspaceFolder": "/demo",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/demo,type=bind",
+
+  // Terminals and the agent run as the unprivileged `demo` user (UID 1000);
+  // MPI launches need no special privileges this way.
+  "remoteUser": "demo",
+
+  // Image has no entrypoint/service; idle so VSCode can attach.
+  "overrideCommand": true,
+
+  // Hardening: no-new-privileges plus drop all Linux capabilities — the
+  // FEniCS solve/test workload needs none.
+  "runArgs": ["--security-opt", "no-new-privileges", "--cap-drop", "ALL"],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
